@@ -58,7 +58,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     // this function asks for the number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // return the number of rows
+        // return the number movies in the array
         return movies.count
     
     }
@@ -89,22 +89,35 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.posterView.af.setImage(withURL: posterUrl!)
         
-        
-        
-        
+    
         
         return cell
     
     }
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+       print("Loading up the details screen")
+        
+        /* Get the new view controller using segue.destination.
+        = find the selected movie */
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for:cell )!
+        let movie = movies[indexPath.row]
+        
+    
+        /* Pass the selected object to the new view controller
+         = Pass the selected movie to the moviedetails view controller
+         */
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        /* the first movie is the movie property in the MovieDetailsViewController, while the second movie is the movie we declare just above (=movies.[indexPath.row]) */
+        detailsViewController.movie = movie
+        
+        // not highlight (=deselect) the cell just chosen when coming back to the main screen from the details screen
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
 
 }
